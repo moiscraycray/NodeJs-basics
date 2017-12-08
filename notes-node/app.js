@@ -6,6 +6,11 @@ const fs = require('fs');
 // to use OS module,  do require('os').
 const os = require('os');
 
+// run this command in root directory $ npm install lodash --save
+// ^ this installs into the node_modules
+// requiring a third party module 'lodash'
+const _ = require('lodash');
+
 // we're requiring a file in the same directory
 const notes = require('./notes');
 
@@ -17,13 +22,23 @@ console.log(result);
 var number = notes.add(9, 3); // we're passing 2 numbers as arguments to the add function in notes.js
 console.log(`Results: ${number}`);
 
-// we store userInfo in variable user
-var user = os.userInfo();
+// https://lodash.com/docs/4.17.4#isString
+// this test whether it's a string or not and returns true/false
+console.log(_.isString(true));
+console.log(_.isString('Olivia'));
 
-console.log(user);
+// https://lodash.com/docs/4.17.4#uniq
+// this makes the array unique
+var filteredArray = _.uniq(['Olivia', 1, 'Olivia', 1, 2, 3, 4]);
+console.log(filteredArray);
 
-fs.appendFile('greetings.txt', `Hello ${user.username}! You are ${notes.age}. `, (err) => {
-  if (err) {
-    console.log('error, unable to write to file');
-  }
-});
+// // we store userInfo in variable user
+// var user = os.userInfo();
+//
+// console.log(user);
+//
+// fs.appendFile('greetings.txt', `Hello ${user.username}! You are ${notes.age}. `, (err) => {
+//   if (err) {
+//     console.log('error, unable to write to file');
+//   }
+// });
