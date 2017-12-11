@@ -1,5 +1,7 @@
 console.log('starting notes.js');
 
+module.exports.age = 23;
+
 // we're exporting a function that doesn't take arguments
 module.exports.addNotes = () => {
   console.log('addNotes');
