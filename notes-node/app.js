@@ -43,3 +43,25 @@ fs.appendFile('greetings.txt', `Hello ${user.username}! You are ${notes.age}. `,
     console.log('error, unable to write to file');
   }
 });
+
+// #################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################################
+
+// Get input/output from terminal
+
+console.log(process.argv) // argv is short of argments vector (in js, it's more like arguments array; this is going to be an array of all the command line arguments passed in) e.g. node app.js hello
+// hello is the 3rd argument passed in
+
+var command = process.argv[2]; // We're accessing the 3rd element of the arguments array
+console.log('Command: ', command)
+
+if (command === 'add') {
+  console.log('Adding new note');
+} else if (command === 'list') {
+  console.log('Listing all notes');
+} else if (command === 'read') {
+  console.log('Reading notes');
+} else if (command === 'remove') {
+  console.log('Removing note');
+}  else {
+  console.log('Not recognised');
+}
