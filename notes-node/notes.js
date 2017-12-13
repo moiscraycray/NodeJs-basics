@@ -2,7 +2,7 @@ console.log('starting notes.js');
 
 module.exports.age = 23;
 
-
+// notes.js
 // yargs
 // we're exporting a function that doesn't take arguments
 var addNote = (title, body) => {
@@ -26,7 +26,7 @@ module.exports = {
   getAll,
   getNote,
   removeNote
-};
+}; // this is ES6; this exports all of the above
 
 // we're exporting a function that takes arguments
 module.exports.add = (a, b) => {

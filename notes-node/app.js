@@ -52,18 +52,21 @@ for (let i = 0; i < 5; i++) {
   console.log('# # # # # # # # #');
 }
 
+// app.js
+// require yargs into file to use the module
 const yargs = require('yargs');
 
 console.log(process.argv) // argv is short of argments vector (in js, it's more like arguments array; this is going to be an array of all the command line arguments passed in) e.g. node app.js hello
 // hello is the 3rd argument passed in
 
-const argv = yargs.argv;
+const argv = yargs.argv; // yargs.argv is where the yargs library stores its version of the arguments that your app ran with.
 var command = process.argv[2]; // We're accessing the 3rd element of the arguments array
-console.log('Command: ', command)
+console.log('Command: ', command);
+console.log('Process', process.argv); // prints out the process in an array
 console.log('Yargs', argv);
 
 if (command === 'add') {
-  notes.addNote(argv.title, argv.body);
+  notes.addNote(argv.title, argv.body); // we're passing the title and the body
 } else if (command === 'list') {
   notes.getAll();
 } else if (command === 'read') {
