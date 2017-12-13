@@ -15,7 +15,7 @@ const _ = require('lodash');
 const notes = require('./notes');
 
 // this returns the result from the function addNotes from notes.js
-var result = notes.addNotes();
+var result = notes.addNote();
 console.log(result);
 
 // this returns the number sum from the function add from notes.js
@@ -48,20 +48,28 @@ fs.appendFile('greetings.txt', `Hello ${user.username}! You are ${notes.age}. `,
 
 // Get input/output from terminal
 
+for (let i = 0; i < 5; i++) {
+  console.log('# # # # # # # # #');
+}
+
+const yargs = require('yargs');
+
 console.log(process.argv) // argv is short of argments vector (in js, it's more like arguments array; this is going to be an array of all the command line arguments passed in) e.g. node app.js hello
 // hello is the 3rd argument passed in
 
+const argv = yargs.argv;
 var command = process.argv[2]; // We're accessing the 3rd element of the arguments array
 console.log('Command: ', command)
+console.log('Yargs', argv);
 
 if (command === 'add') {
-  console.log('Adding new note');
+  notes.addNote(argv.title, argv.body);
 } else if (command === 'list') {
-  console.log('Listing all notes');
+  notes.getAll();
 } else if (command === 'read') {
-  console.log('Reading notes');
+  notes.getNote(argv.title);
 } else if (command === 'remove') {
-  console.log('Removing note');
+  notes.removeNote(argv.title);
 }  else {
   console.log('Not recognised');
 }
