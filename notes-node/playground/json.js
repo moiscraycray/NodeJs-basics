@@ -22,6 +22,7 @@ for (let i = 0; i < 2; i++) {
 
 const fs = require('fs');
 
+// The following code adds a note
 var originalNote = {
   title: 'Some title',
   body: 'Some body'
@@ -29,10 +30,11 @@ var originalNote = {
 var originalNoteString = JSON.stringify(originalNote); // Here we're setting the variable originalNoteString to the stingified version of the originalNote object
 fs.writeFileSync('notes.json', originalNoteString); // 2 args, first is file name, second is the text content. This saves the value of originalNoteString into the file 'notes.json'.
 
+// The following code below reads the note
 var noteString = fs.readFileSync('notes.json');
 // Here we read the value of notes.json to create the note variable
 var note = JSON.parse(noteString);
 // JSON.parse takes the string JSON and converts it back into a regular javascript object or array depending on whatever you save. Here we're going to pass in a 'noteString' which we're getting from the 'notes.json' file
 
-console.log(typeof note);
-console.log(note.title);
+console.log(typeof note); // returns object
+console.log(note.title); // returns 'Some title'
