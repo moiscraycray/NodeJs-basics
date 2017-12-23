@@ -74,7 +74,9 @@ if (command === 'add') {
     console.log('Note title taken');
   }
 } else if (command === 'list') {
-  notes.getAll();
+  var allNotes = notes.getAll();
+  console.log(`Printing ${allNotes.length} note(s).`); // allNotes is an array. allNotes > getAll() > fetchNotes()
+  allNotes.forEach( note => notes.logNote(note));
 } else if (command === 'read') {
   var note = notes.getNote(argv.title);
   if (note) { // This will run if note is returned as defined in getNote() in notes.js

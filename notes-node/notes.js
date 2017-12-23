@@ -45,7 +45,7 @@ var addNote = (title, body) => {
 // check notes-data.json file
 
 var getAll = () => {
-  console.log('Getting all notes');
+  return fetchNotes();
 }
 
 var getNote = (title) => {
