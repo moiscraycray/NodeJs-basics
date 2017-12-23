@@ -15,7 +15,7 @@ var fetchNotes = () => { // this is arrow function, no arguments since it's goin
 };
 
 var saveNotes = (notes) => { // another function, take argument of 'notes' array saved to the file system (fs). This function doesn't need to return anything
-  fs.writeFileSync('notes-data.json', JSON.stringify(notes)); // 2 args, 1st: name of file, 2nd: content of data (in this case, it's the stringified version of notes array)
+  fs.writeFileSync('notes-data.json', JSON.stringify(notes)); // We're writing a new file (or overwriting existing) 2 args, 1st: name of file, 2nd: content of data (in this case, it's the stringified version of notes array)
 };
 
 // notes.js
@@ -53,8 +53,11 @@ var getNote = (title) => {
 }
 
 var removeNote = (title) => {
-  console.log(`Removing the title ${title}`);
-}
+  var notes = fetchNotes(); //calling fecthNotes function. notes is an array due to fetchNotes()
+  var filteredNotes = notes.filter(note => note.title !== title); // This line creates a new array of all notes with the title that doesn't equal to the title passed in. This essentially 'removes' the passed in title
+  saveNotes(filteredNotes); // Calling saveNotes passing in the new array 'filteredNotes' which overwrites the eixsting file.
+  return notes.length !== filteredNotes.length; // this returns true/false. True means a note was removed, false means nothing has been removed
+};
 
 module.exports = {
   addNote,
