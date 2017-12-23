@@ -66,7 +66,15 @@ console.log('Process', process.argv); // prints out the process in an array
 console.log('Yargs', argv);
 
 if (command === 'add') {
-  notes.addNote(argv.title, argv.body); // we're passing the title and the body
+  var note = notes.addNote(argv.title, argv.body); // we're passing the title and the body
+  if (note) { // this will only run if the note has been defined (not return as 'undefined')
+    console.log('Note created');
+    console.log('--')
+    console.log(`Title: ${note.title}`)
+    console.log(`Body: ${note.body}`)
+  } else {
+    console.log('Note title taken');
+  }
 } else if (command === 'list') {
   notes.getAll();
 } else if (command === 'read') {
