@@ -52,6 +52,9 @@ for (let i = 0; i < 5; i++) {
   console.log('# # # # # # # # #');
 }
 
+
+
+
 // app.js
 // require yargs into file to use the module
 const yargs = require('yargs');
@@ -59,11 +62,44 @@ const yargs = require('yargs');
 console.log(process.argv) // argv is short of argments vector (in js, it's more like arguments array; this is going to be an array of all the command line arguments passed in) e.g. node app.js hello
 // hello is the 3rd argument passed in
 
-const argv = yargs.argv; // yargs.argv is where the yargs library stores its version of the arguments that your app ran with.
+const titleOptions = {
+  describe: 'Title of note',
+  demand: true, // demand tells yargs whether the argument 'title' is required. So if someone tries to add a note without a title, it's going to fail
+  alias: 't' // alias lets you provide a shortcut so you don't have to typ '--title'. You can set the alias to a single character like 't', now in the terinal you can use the new syntax just type -t=flagTitle
+}
+const bodyOptions = {
+  describe: 'Body of the note',
+  demand: true,
+  alias: 'b'
+}
+
+const argv = yargs
+  .command('add', 'Add a new note', {
+    title: titleOptions,
+    body: bodyOptions
+  })
+  .command('list', 'List all notes') // this requires no arguments because we're just listing all the existing notes
+  .command('read', 'Read a note', {
+    title: titleOptions
+  }) // this command needs the title argument otherwise it doesn't which note to read
+  .command('remove', 'Remove a note', {
+    title: titleOptions
+  })
+  .help() // help() is a method so we're calling it as a function and we don't need to pass in any arguments. This sets up yargs to return some really useful info when someone runs the program. EG in terminal $ node app.js --help will list all commands available listed above like 'add' 'add a new note'
+  .argv; // yargs.argv is where the yargs library stores its version of the arguments that your app ran with. There are 3 arguments the command takes; 1st is exactly what the user types into the terminal, 2nd is the description of what that command does, 3rd is an options objects that lets us specify what arguments this command requires.
+
+
+
+
+
 var command = process.argv[2]; // We're accessing the 3rd element of the arguments array
 console.log('Command: ', command);
 console.log('Process', process.argv); // prints out the process in an array
 console.log('Yargs', argv);
+
+
+
+
 
 if (command === 'add') {
   var note = notes.addNote(argv.title, argv.body); // we're passing the title and the body
