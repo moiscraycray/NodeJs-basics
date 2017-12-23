@@ -61,11 +61,18 @@ var removeNote = (title) => {
   return notes.length !== filteredNotes.length; // this returns true/false. True means a note was removed, false means nothing has been removed. This is stored in variable noteRemoved in app.js
 };
 
+var logNote = (note) => { // 'note' is passed in because we want to print both title and body
+  console.log('--');
+  console.log(`Title: ${note.title}`);
+  console.log(`Body: ${note.body}`);
+}
+
 module.exports = {
   addNote,
   getAll,
   getNote,
-  removeNote
+  removeNote,
+  logNote
 }; // this is ES6; this exports all of the above
 
 // we're exporting a function that takes arguments

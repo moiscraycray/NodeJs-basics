@@ -69,9 +69,7 @@ if (command === 'add') {
   var note = notes.addNote(argv.title, argv.body); // we're passing the title and the body
   if (note) { // this will only run if the note has been defined (not return as 'undefined') in notes.js in the addNote()
     console.log('Note created');
-    console.log('--');
-    console.log(`Title: ${note.title}`);
-    console.log(`Body: ${note.body}`);
+    notes.logNote(note); // Passing in note which is defined in addNote() in notes.js
   } else {
     console.log('Note title taken');
   }
@@ -81,9 +79,7 @@ if (command === 'add') {
   var note = notes.getNote(argv.title);
   if (note) { // This will run if note is returned as defined in getNote() in notes.js
     console.log('Note found');
-    console.log('--');
-    console.log(`Title: ${note.title}`);
-    console.log(`Body: ${note.body}`);
+    notes.logNote(note);
   } else { // This will run if note was returned as undefined in getNote() in notes.js
     console.log('Note not found');
   }
