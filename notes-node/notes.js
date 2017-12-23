@@ -49,14 +49,16 @@ var getAll = () => {
 }
 
 var getNote = (title) => {
-  console.log(`Getting the title ${title}`);
+  var notes = fetchNotes();
+  var filteredNotes = notes.filter(note => note.title === title);
+  return filteredNotes[0]; // Here we're returning the first item of the array 'filteredNotes' because there is only one item in the array (because only one note should match the title with the passed in title). If there are no items in the array (because no titles matched the passed in title), it's going to return undefined which is fine; it will trigger the elsif statement in app.js
 }
 
 var removeNote = (title) => {
   var notes = fetchNotes(); //calling fecthNotes function. notes is an array due to fetchNotes()
   var filteredNotes = notes.filter(note => note.title !== title); // This line creates a new array of all notes with the title that doesn't equal to the title passed in. This essentially 'removes' the passed in title
   saveNotes(filteredNotes); // Calling saveNotes passing in the new array 'filteredNotes' which overwrites the eixsting file.
-  return notes.length !== filteredNotes.length; // this returns true/false. True means a note was removed, false means nothing has been removed
+  return notes.length !== filteredNotes.length; // this returns true/false. True means a note was removed, false means nothing has been removed. This is stored in variable noteRemoved in app.js
 };
 
 module.exports = {

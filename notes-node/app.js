@@ -67,18 +67,26 @@ console.log('Yargs', argv);
 
 if (command === 'add') {
   var note = notes.addNote(argv.title, argv.body); // we're passing the title and the body
-  if (note) { // this will only run if the note has been defined (not return as 'undefined')
+  if (note) { // this will only run if the note has been defined (not return as 'undefined') in notes.js in the addNote()
     console.log('Note created');
-    console.log('--')
-    console.log(`Title: ${note.title}`)
-    console.log(`Body: ${note.body}`)
+    console.log('--');
+    console.log(`Title: ${note.title}`);
+    console.log(`Body: ${note.body}`);
   } else {
     console.log('Note title taken');
   }
 } else if (command === 'list') {
   notes.getAll();
 } else if (command === 'read') {
-  notes.getNote(argv.title);
+  var note = notes.getNote(argv.title);
+  if (note) { // This will run if note is returned as defined in getNote() in notes.js
+    console.log('Note found');
+    console.log('--');
+    console.log(`Title: ${note.title}`);
+    console.log(`Body: ${note.body}`);
+  } else { // This will run if note was returned as undefined in getNote() in notes.js
+    console.log('Note not found');
+  }
 } else if (command === 'remove') {
   var noteRemoved = notes.removeNote(argv.title);
   var message = noteRemoved ? 'Note was removed' : 'Note not found';
