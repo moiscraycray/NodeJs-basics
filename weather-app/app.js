@@ -22,10 +22,16 @@ request({
   url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(argv.address)}`, // we're encoding the user input (from string to %20)
   json: true // this tells request that the data coming back is going to be json data and that it should go ahead take that json string and convert it to an object for us
 }, (error, response, body) => {
-  console.log(`Address: ${body.results[0].formatted_address}`); // The results[0].formatted_address is from the json view in your chrome browser. It is the blue box that appears when you hover over a piece of data.
-  console.log(`Latitude: ${body.results[0].geometry.location.lat}`);
-  console.log(`Longitude: ${body.results[0].geometry.location.lng}`);
-  //console.log(JSON.stringify(body, undefined, 2)); // JSON stringify converts json object to human-readable string. 2nd argument is used to filter out properties but we're doing anything with it so it's set to undefined. 3rd argument  specifies how many spaces you want in your indentation
+  if (error) {
+    console.log('Unable to connect to Google servers.'); // error returns true when url is incorrect
+  } else if (body.status === 'ZERO_RESULTS') { // status property is from the google geocode api, check google api in json view. this will run if user types in random things
+    console.log('Unable to find that address');
+  } else if (body.status === 'OK') {
+    console.log(`Address: ${body.results[0].formatted_address}`); // The results[0].formatted_address is from the json view in your chrome browser. It is the blue box that appears when you hover over a piece of data.
+    console.log(`Latitude: ${body.results[0].geometry.location.lat}`);
+    console.log(`Longitude: ${body.results[0].geometry.location.lng}`);
+    //console.log(JSON.stringify(body, undefined, 2)); // JSON stringify converts json object to human-readable string. 2nd argument is used to filter out properties but we're doing anything with it so it's set to undefined. 3rd argument  specifies how many spaces you want in your indentation
+  }
 });
 // request takes 2 arguments:
 // first argument is going to be an options object where we can configure all sorts of information
