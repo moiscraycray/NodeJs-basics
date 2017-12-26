@@ -33,5 +33,5 @@ geocode.geocodeAddress(argv.address, (errorMessage, results) => {
     });
   }
 });
-// Here we're calling the function geocodeAddress from the geocode file defined on line 4. We're passing the user input 'address' tot he geocodeAddress function
+// Here we're calling the function geocodeAddress from the geocode file defined on line 4. We're passing the user input 'address' to the geocodeAddress function
 // We're also doing a callback function. This function will get called after the request comes back.

@@ -16,3 +16,29 @@ somePromise.then((message) => { // this anonymous function is only going to get 
 // For example, if both line 3 & 4 are uncommented, only the resolve will print, we'll never see the error message because you can only do one of those actions (resolve, reject). You can only resolve or reject once. You can't do both and you can't do either twice. This is an advantage over callbacks because we might accidentally call the callback multiple times.
 
 // Before a promise is resolved or rejected, it is in a state called 'pending'. It means that you're waiting for information to come back or you're waiting for your async computation to finish. In our case, while we're waiting for the weather data to come back, the promise is pending. A promise is 'settled' when it has either been fulfilled or rejected.
+
+// The 'request' library we used to get HTTP requests does not support promises natively, but you can wrap your request call inside of a promise.
+
+// EXAMPLE 2
+var asyncAdd = (a, b) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => { // arbitrary timer
+      if (typeof a === 'number' && typeof b === 'number') {
+        resolve(a + b); // this is the happy path, if a & b are numbers
+      } else {
+        reject('Arguments must be numbers');
+      }
+    }, 1500);
+  });
+};
+
+asyncAdd(7, 43).then((result) => {
+  console.log('Result: ', result);
+  return asyncAdd(result, 4); // we're chaining promises. After calling asyncAdd, we're calling it again, passing the result from the first time and a new number
+}, (errorMessage) => {
+  console.log('Error: ', errorMessage);
+}).then((result) => { // After the first then fires (line 35), this will then be fired
+  console.log('Second result: ', result);
+}, (errorMessage) => {
+  console.log(errorMessage);
+});
