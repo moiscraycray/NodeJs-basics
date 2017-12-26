@@ -42,3 +42,13 @@ asyncAdd(7, 43).then((result) => {
 }, (errorMessage) => {
   console.log(errorMessage);
 });
+
+// almost the same as the above .then but this uses 'catch' to catch errors early and stop the program when it does find errors
+asyncAdd('7', 43).then((result) => {
+  console.log('Catch Result: ', result);
+  return asyncAdd(result, 4);
+}).then((result) => {
+  console.log(' Catch Second result: ', result);
+}).catch((errorMessage) => {
+  console.log(errorMessage);
+});
