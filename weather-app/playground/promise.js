@@ -1,6 +1,6 @@
 var somePromise = new Promise((resolve, reject) => {
   setTimeout(() => {
-    resolve('Hey. It worked.'); // resolve & reject can only take 1 argument. If need multiple argument, use options object e.g. {name:'olivia', age: 23}
+    resolve('Hey. It worked.'); // resolve & reject can only take 1 argument. If need multiple argument, use options object e.g. {name:'olivia', age: 23} see line 14 promise-2.js in /playground
     reject('Unable to fulfil promise')
   }, 2500)
 });
@@ -43,7 +43,7 @@ asyncAdd(7, 43).then((result) => {
   console.log(errorMessage);
 });
 
-// almost the same as the above .then but this uses 'catch' to catch errors early and stop the program when it does find errors
+// almost the same as the above .then but this uses 'catch' to catch errors early and stop the program when it does find errors. Either comment out line 35-44 or line 47-54
 asyncAdd('7', 43).then((result) => {
   console.log('Catch Result: ', result);
   return asyncAdd(result, 4);

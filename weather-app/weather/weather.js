@@ -4,7 +4,7 @@ var getWeather = (lat, lng, callback) => {
   request({
     url:`https://api.darksky.net/forecast/c37ef8772392edd1fafcc111bf91c2bc/${lat},${lng}`,
     json: true
-  }, (error, response, body) => {
+  }, (error, response, body) => { // error, response, body is 'request' convention
     if (!error && response.statusCode === 200) {
       let fah = body.currently.temperature;
       let cel = (fah - 32) * 0.5556;
@@ -22,5 +22,4 @@ var getWeather = (lat, lng, callback) => {
 
 module.exports = {
   getWeather
-}
-// same as module.exports.getWeather = getWeather;
+} // same as module.exports.getWeather = getWeather;
