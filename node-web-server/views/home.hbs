@@ -5,12 +5,8 @@
     <title>Home</title>
   </head>
   <body>
-    <h1>{{pageTitle}}</h1>
-    <p>{{welcomeMessage}}</p>
-
-    <footer>
-      <p>Copyright {{currentYear}}</p>
-    </footer>
-
+    {{> header}} <!-- This is the syntax for passing in a partial file -->
+    <p>{{screamIt welcomeMessage}}</p> <!-- we're calling the screamIt helper, passing in one argument 'welcomeMessage' -->
+    {{> footer}}
   </body>
 </html>

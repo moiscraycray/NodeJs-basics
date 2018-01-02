@@ -6,11 +6,10 @@
     <title>Some website</title>
   </head>
   <body>
-    <h1>{{pageTitle}}</h1> <!-- handlebars syntax are 2 curly braces. You can reference any of the props passed in -->
+    <!-- <h1>{pageTitle}}</h1> handlebars syntax are 2 opening and closing curly braces . You can reference any of the props passed in. 1 curly brace is deleted for commenting purpose -->
+    {{> header}}
     <p>Some text here</p>
 
-    <footer>
-      <p>Copyright {{currentYear}}</p>
-    </footer>
+    {{> footer}}
   </body>
 </html>
