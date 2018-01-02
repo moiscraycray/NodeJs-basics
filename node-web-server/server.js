@@ -20,9 +20,9 @@ app.use((req, res, next) => { // next allows you to tell express that when your 
   next();
 }); // app.use is how you register middleware and it takes a function.
 
-app.use((req, res, next) => {
-  res.render('maintenance'); // this maintenance middlware will stop everything after it from executing
-});
+// app.use((req, res, next) => {
+//   res.render('maintenance'); // this maintenance middlware will stop everything after it from executing
+// });
 
 // we put this after the maintenance call, otherwise everything in /public can be accessed in the browser
 app.use(express.static(__dirname + '/public')); // to use middleware, add this line. Middleware lets you make tweaks to how express works. Static() takes the absolute path to the folder you want to serve up (the complete path) so we use __dirname - it's a variable that stores the path to your projects directory ie node-web-server. We're concatenating the 'public' folder to the end of the file path to access the folder 'public'
@@ -60,6 +60,12 @@ app.get('/about', (req, res) => {
     pageTitle: 'About page'
     // currentYear new Date().getFullYear()
   }); // The 2nd argument of render is an object. We pass the keys (pageTitle, currentYear) to the about.hbs to create a dynamic page with dynamic data. To use these, in our about.hbs we need to use handlebars syntax {{}}
+});
+
+app.get('/projects', (req, res) => {
+  res.render('projects.hbs', {
+    pageTitle: ' Projects'
+  });
 });
 
 app.get('/bad', (req, res) => {
