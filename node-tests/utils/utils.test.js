@@ -1,28 +1,33 @@
 const expect = require('expect');
 const utils = require('./utils.js')
 
-it('should add two numbers', () => {
-  let result = utils.add(33, 11);
-  expect(result).toBe(44).toBeA('number'); // we can chain on anotehr call
-});
+describe('Utils', () => { //Any test defined in here is going to be part of the utils block.
 
-it('should async add two numbers', (done) => { // 'done' tells mocha this is an async test and it won't finish processing the test until 'done' is called. This means we can call done after our assertions. Done is provided by Mocha
-  utils.asyncAdd(4, 3, (sum) => {
-    expect(sum).toBe(7).toBeA('number');
-    done(); // this tells mocha we're done with the test and process the result
+  describe('#add', () => {
+    it('should add two numbers', () => {
+      let result = utils.add(33, 11);
+      expect(result).toBe(44).toBeA('number'); // we can chain on anotehr call
+    });
+
+    it('should async add two numbers', (done) => { // 'done' tells mocha this is an async test and it won't finish processing the test until 'done' is called. This means we can call done after our assertions. Done is provided by Mocha
+      utils.asyncAdd(4, 3, (sum) => {
+        expect(sum).toBe(7).toBeA('number');
+        done(); // this tells mocha we're done with the test and process the result
+      });
+    });
+  })
+
+  it('should async square two numbers', (done) => { // 'done' will tell Mocha to wait until done is called to decide whether or not the test passed
+    utils.asyncSquare(5, (square) => {
+      expect(square).toBe(25).toBeA('number');
+      done();
+    });
   });
-});
 
-it('should async square two numbers', (done) => { // 'done' will tell Mocha to wait until done is called to decide whether or not the test passed
-  utils.asyncSquare(5, (square) => {
-    expect(square).toBe(25).toBeA('number');
-    done();
+  it('should square a number', () => {
+    let result = utils.square(3);
+    expect(result).toBe(9).toBeA('number'); // this works with strings too
   });
-});
-
-it('should square a number', () => {
-  let result = utils.square(3);
-  expect(result).toBe(9).toBeA('number'); // this works with strings too
 });
 
 it('should expect the same number', () => {
