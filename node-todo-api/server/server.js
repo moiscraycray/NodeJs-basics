@@ -6,15 +6,21 @@ mongoose.Promise = global.Promise; // only need to set line5&6 once, no need to 
 mongoose.connect('mongodb://localhost: 27017/TodoApp');
 
 // Here we're creating a mongoose.model so mongoose knows how to store our data.
+// validators: http://mongoosejs.com/docs/validation.html
 var Todo = mongoose.model('Todo', {
   text: {
-    type: String
+    type: String, // if user enters number or boolean, it'll still work; mongoose will wrap them in quotes
+    required: true, //this and below are validators, making sure we have valid data
+    minlength: 1,
+    trim: 1 // trims any white space before and after first&last character
   },
   completed: {
-    type: Boolean
+    type: Boolean,
+    default: false
   },
   completedAt: {
-    type: Number
+    type: Number,
+    default: null
   }
 });
 
@@ -39,4 +45,25 @@ anotherTodo.save().then((doc) => {
   console.log(JSON.stringify(doc, undefined, 2));
 }, (error) => {
   console.log('Unable to save todo');
+});
+
+// User
+// email -require, trim, type, minlength 1
+var UserEmail = mongoose.model('User', {
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1
+  }
+});
+// creating new instance of UserEmail
+var newUser = new UserEmail({
+  email: '     olivia@example.com.au    '
+})
+
+newUser.save().then((doc) => {
+  console.log(JSON.stringify(doc, undefined, 2));
+}, (error) => {
+  console.log('Unable to save new user');
 });
