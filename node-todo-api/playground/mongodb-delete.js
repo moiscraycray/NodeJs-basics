@@ -29,7 +29,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
   //   console.log(result); // you don't have to use a promise, we're using one here because we want to see the results in the terminal
   // });
 
-  db.collection('Users').findOneAndDelete({_id: 1234}).then((result) => {
+  db.collection('Users').findOneAndDelete({_id: new ObjectID('1234')}).then((result) => {
     console.log(result);
   });
 
