@@ -8,6 +8,18 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
   }
   console.log('Connected to MongoDB server.');
 
+  db.collection('Users').insertOne({
+    name: 'Olivia',
+    age: 23,
+    location: 'Australia'
+  }, (err, result) => {
+    if (err) {
+      console.log('Unable to insert todo', err);
+    } else {
+      console.log(JSON.stringify(result.ops, undefined, 2));
+    }
+  });
+
   db.collection('Todos').insertOne({
     text: 'Somthing to do',
     completed: false
@@ -22,3 +34,5 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
 
   db.close(); // This closes the connection with the MongoDB server.
 });
+
+// terminal $ node playground/mongodb-connect.js then check in Robomongo
