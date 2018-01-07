@@ -25,6 +25,16 @@ app.post('/todos', (req, res) => { // 2 args: 1st URL, 2nd callback. We use forw
   });
 });
 
+app.get('/todos', (req, res) => { // get all todos
+  Todo.find().then((todos) => { // not passing in anything will get ALL todos. Success case will get called with all the todos (passed in todos)
+    res.send({ // we're sending an object back (instead of an array which would just 'todos'). objects let us add properties whereas an array will limit what we can do
+      todos
+    })
+  }, (err) => {
+    res.status(400).send(err);
+  })
+});
+
 app.listen(3000, () => {
   console.log('Started on port 3000');
 });
