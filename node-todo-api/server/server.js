@@ -28,3 +28,7 @@ app.post('/todos', (req, res) => { // 2 args: 1st URL, 2nd callback. We use forw
 app.listen(3000, () => {
   console.log('Started on port 3000');
 });
+
+module.exports = {
+  app // exporting app for server.test.js
+};
