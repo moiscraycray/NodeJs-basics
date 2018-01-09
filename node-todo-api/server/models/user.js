@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 // User
 // email -require, trim, type, minlength 1
-var UserEmail = mongoose.model('User', {
+var User = mongoose.model('User', { // Originally UserEmail but we required it as 'User' in mongoose-quries in /playground
   email: {
     type: String,
     required: true,
@@ -23,5 +23,5 @@ var UserEmail = mongoose.model('User', {
 // });
 
 module.exports = {
-  UserEmail
+  User
 };

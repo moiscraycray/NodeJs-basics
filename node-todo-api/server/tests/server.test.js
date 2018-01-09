@@ -74,7 +74,7 @@ describe('GET /todos', () => {
     request(app)// supertest
       .get('/todos')
       .expect(200)
-      .expt((res) => {
+      .expect((res) => {
         expect(res.body.todos.length).toBe(2);
       })
       .end(done);
