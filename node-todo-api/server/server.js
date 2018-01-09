@@ -37,6 +37,26 @@ app.get('/todos', (req, res) => { // get all todos
   })
 });
 
+// GET /todos/1234556
+var {ObjectID} = require('mongodb');
+app.get('/todos/:id', (req, res) => { // :id is a URL parameter, this creates an id variable. so when sombody makes a request like 'GET todos/12345', this will fire
+  var id = req.params.id; // we're storing id with /todos/:id
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send(); //sending back status 404 with empty body 'send()'.
+  }
+
+  Todo.findById(id).then((todo) => {
+    if (!todo) { // check if there is no todo
+      return res.status(404).send();
+    }
+    res.send({todo}) // success case
+  }).catch((error) => {
+    res.status(400).send();
+  });
+  //res.send(req.params) //req.params is an object, it has key/value pairs. Key is URL parameter and value is whatever value passed to :id
+  // we're sending(req.params) so we can test it in postman
+});
+
 app.listen(3000, () => {
   console.log('Started on port 3000');
 });
