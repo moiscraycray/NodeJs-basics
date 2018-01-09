@@ -105,6 +105,19 @@ app.patch('/todos/:id', (req, res) => {
   })
 });
 
+// POST /users
+app.post('/users', (req, res) => { // 2 args: 1st URL, 2nd callback. We use forward-slash is convention for resource creation (creating a new todo)
+  // console.log(req.body); // body is stored by bodyParser on line 14
+  let body = _.pick(req.body, ['email', 'password'])
+  let user = new User(body);
+
+  user.save().then((user) => {
+    res.send(user); // sends the user info back to user like email and password
+  }).catch((error) => {
+    res.status(400).send(error);
+  });
+});
+
 app.listen(3000, () => {
   console.log('Started on port 3000');
 });
