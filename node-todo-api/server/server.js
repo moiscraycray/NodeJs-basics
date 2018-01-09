@@ -1,8 +1,9 @@
 // install express & Body-parser in terminal
 // npm i express@4.14.0 body-parser@1.15.2 --save
 // body-parse let us send JSON to the server. The server can then take that JSON and do something with it. Body-parser essentiall parses the body. It takes that string body and turns it into a javascript object.
-var express = require('express');
-var bodyParser = require('body-parser');
+const _ = require('lodash');
+const express = require('express');
+const bodyParser = require('body-parser');
 
 var {mongoose} = require('./db/mongoose.js'); //destructing object
 var {Todo} = require('./models/todo');
@@ -14,7 +15,7 @@ app.use(bodyParser.json()); // this sends json to our express application. All i
 
 // POST /todos
 app.post('/todos', (req, res) => { // 2 args: 1st URL, 2nd callback. We use forward-slash is convention for resource creation (creating a new todo)
-  // console.log(req.body); // body is stored by bodyParser on line 13
+  // console.log(req.body); // body is stored by bodyParser on line 14
   let todo = new Todo({
     text: req.body.text
   });
@@ -75,6 +76,33 @@ app.delete('/todos/:id', (req, res) => {
   }).catch((error) => {
     res.status(400).send();
   });
+});
+
+// PATCH - update a resource
+app.patch('/todos/:id', (req, res) => {
+  let id = req.params.id;
+  let body = _.pick(req.body, ['text', 'completed']) // here, we're choosing only some properties we want to update. We don't want to let users to update id or completedAt properties
+
+  if (!ObjectID.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  if (_.isBoolean(body.completed) && body.completed) { // checking if body.completed is a boolean and if boolean is true (meaning the todo has been completed)
+    body.completedAt = new Date().getTime(); // date fom Jan 1st 1970, if positive number it is time after that; if negative number , time is before that
+  } else {
+    body.completed = false;
+    body.completedAt = null;
+  }
+
+  Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo) => { // $set: body; body is from line 84. new: true is similar to returnOriginal: false, we want to return the new updated data
+    if (!todo) {
+      return res.status(404).send();
+    }
+
+    res.send({todo});
+  }).catch((error) => {
+    res.status(400).send();
+  })
 });
 
 app.listen(3000, () => {

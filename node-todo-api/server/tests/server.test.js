@@ -38,7 +38,7 @@ describe('POST /todos', () => {
       .send({text}) //object will get converted to JSON by supertest so there's no need for manual conversion
       .expect(200) // expect status to be 200 when sent valid data
       .expect((res) => {
-        expect(res.body.text).toBe(text) //res is from server.js line 23. We're testing that the response body has a text property and that text property equals to text above on line 33
+        expect(res.body.text).toBe(text) //res is from server.js line 24. We're testing that the response body has a text property and that text property equals to text above on line 33
       })
       .end((error, res) => { // instead of passing done, we want to handle errors
         if (error) {
