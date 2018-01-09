@@ -2,13 +2,16 @@
 
 const expect = require('expect');
 const request = require('supertest');
+const {ObjectID} = require('mongodb');
 
 const {app} = require('./../server.js'); // ES6 destructuring
 const {Todo} = require('./../models/todo.js');
 
 const todos = [{
+  _id: new ObjectID(),
   text: 'First test todo'
 }, {
+  _id: new ObjectID(),
   text: 'Second test todo'
 }];
 
@@ -35,7 +38,7 @@ describe('POST /todos', () => {
       .send({text}) //object will get converted to JSON by supertest so there's no need for manual conversion
       .expect(200) // expect status to be 200 when sent valid data
       .expect((res) => {
-        expect(res.body.text).toBe(text) //res is from server.js line 22. We're testing that the response body has a text property and that text property equals to text above on line 18
+        expect(res.body.text).toBe(text) //res is from server.js line 23. We're testing that the response body has a text property and that text property equals to text above on line 33
       })
       .end((error, res) => { // instead of passing done, we want to handle errors
         if (error) {
@@ -44,7 +47,7 @@ describe('POST /todos', () => {
 
         Todo.find({text}).then((todos) => { // here is making a request to the database, fetching all the todos and verifying that the todo was indeed added. Passing nothing in find() to fetch everything the Todo collection.
           expect(todos.length).toBe(1); // length should === 1 because we added 1 todo item.
-          expect(todos[0].text).toBe(text); // testing the previous item^ has a text property equal to the text variable on line 18.
+          expect(todos[0].text).toBe(text); // testing the previous item^ has a text property equal to the text variable on line 33.
           done(); // wrapping the test case
         }).catch((error) => done(error)) // catch is going to get any errors that might occur inside of a callback, then we're gonna take that error argument and pass it into done();
       })
@@ -61,7 +64,7 @@ describe('POST /todos', () => {
           done(err);
         } else {
           Todo.find().then((todos) => {
-            expect(todos.length).toBe(2); // there shouldn't be any todos before this test case runs due to line 10-14
+            expect(todos.length).toBe(2); // there shouldn't be any todos before this test case runs due to line 25-29
             done();
           }).catch((error) => done(error));
         }
@@ -74,9 +77,37 @@ describe('GET /todos', () => {
     request(app)// supertest
       .get('/todos')
       .expect(200)
-      .expect((res) => {
+      .expect((res) => { // custom expect call
         expect(res.body.todos.length).toBe(2);
       })
+      .end(done);
+  });
+});
+
+describe('GET /todos/:id', () => {
+  it('should return todo doc', (done) => { // async test so we need 'done'
+    request(app) // supertest; we're going to request something from the app express application
+      .get(`/todos/${todos[0]._id.toHexString()}`) // testing get url. accessing something from the todos array, the first todo and we're looking for the its _id property. We need to convert the objectID to string with .toHexString()
+      .expect(200)
+      .expect((res) => { // custom expect call to test the body that comes back matches the body at line 12
+        expect(res.body.todo.text).toBe(todos[0].text);
+      })
+      .end(done);
+  });
+
+  it('should return 404 if todo not found', (done) => {
+    let hexId = new ObjectID().toHexString();
+
+    request(app)
+      .get(`/todos/${hexId}`)
+      .expect(404)
+      .end(done);
+  });
+
+  it('should return 404 for non-object ids', (done) => {
+    request(app)
+      .get('/todos/123abc')
+      .expect(404)
       .end(done);
   });
 });
