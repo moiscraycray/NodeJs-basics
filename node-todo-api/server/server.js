@@ -12,6 +12,7 @@ var app = express();
 
 app.use(bodyParser.json()); // this sends json to our express application. All it does is parse the body of a POST request as JSON, if the 'content type' of the request is 'application/json'
 
+// POST /todos
 app.post('/todos', (req, res) => { // 2 args: 1st URL, 2nd callback. We use forward-slash is convention for resource creation (creating a new todo)
   // console.log(req.body); // body is stored by bodyParser on line 13
   let todo = new Todo({
@@ -25,6 +26,7 @@ app.post('/todos', (req, res) => { // 2 args: 1st URL, 2nd callback. We use forw
   });
 });
 
+// GET /todos
 app.get('/todos', (req, res) => { // get all todos
   Todo.find().then((todos) => { // not passing in anything will get ALL todos. Success case will get called with all the todos (passed in todos)
     res.send({ // we're sending an object back (instead of an array which would just 'todos'). objects let us add properties whereas an array will limit what we can do
