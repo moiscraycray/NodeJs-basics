@@ -111,8 +111,11 @@ app.post('/users', (req, res) => { // 2 args: 1st URL, 2nd callback. We use forw
   let body = _.pick(req.body, ['email', 'password'])
   let user = new User(body);
 
-  user.save().then((user) => {
-    res.send(user); // sends the user info back to user like email and password
+  user.save().then(() => {
+    //res.send(user); // sends the user info back to user like email and password
+    return user.generateAuthToken(); // line 36 from user.js
+  }).then((token) => {
+    res.header('x-auth', token).send(user); //header 2 args: key/value pairs. key is the header name and the value is the value you want to set the header to our header name
   }).catch((error) => {
     res.status(400).send(error);
   });
